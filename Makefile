@@ -56,6 +56,7 @@ SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
 
 # define the C object files 
 OBJECTS		:= $(SOURCES:.cpp=.o)
+OBJECTS		:= $(addprefix $(OUTPUT)/, $(notdir $(OBJECTS)))
 # OBJECTS		+= $(SOURCES:.c=.o)
 
 #
@@ -82,8 +83,11 @@ $(MAIN): $(OBJECTS)
 # %.o: %.cpp
 # 	$(CXX) $(CXXFLAGS) $(INCLUDES)  -c $<  -o $(OUTPUT)/$@
 
-.cpp.o:
+$(OUTPUT)/%.o: $(SRC)/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES)  -c $<  -o $@
+
+# .cpp.o:
+# 	$(CXX) $(CXXFLAGS) $(INCLUDES)  -c $<  -o $@
 
 # .c.o:
 # 	gcc $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
